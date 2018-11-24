@@ -2,6 +2,7 @@ package sandbox.mnist;
 
 import java.lang.Float;
 import java.lang.Math;
+import java.util.Random;
 
 public class Neuron {
 
@@ -20,15 +21,16 @@ public class Neuron {
 		this.input[0] = 1;
 		for(int i=1;i<(ROWS*COLUMNS)+1;i++)
 			this.input[i] = 0;
+		Random random = new Random();
 		for(int i=0;i<(ROWS*COLUMNS)+1;i++)
-			this.weights[i] = 0.0f;
+			this.weights[i] = -1.0f+2*(float)random.nextDouble();
 	}
 
 	private void setDesired(int label) {
 		if(this.number == label)
 			this.desired = 1;
 		else
-			this.desired = -1;
+			this.desired = 0;
 	}
 
 	private void inputProcessing() {
@@ -42,12 +44,13 @@ public class Neuron {
 		if(this.output>=0)
 			this.output = 1;
 		else
-			this.output = -1;
+			this.output = 0;
 	}
 
 	private void weightChanging(float learningRate) {
 		for(int i=0;i<(ROWS*COLUMNS)+1;i++) {
-			this.weights[i]+=Math.tanh((double)(this.weights[i]+learningRate*(this.desired-this.output)*this.input[i]));
+			//this.weights[i]+=Math.tanh((double)(learningRate*(this.desired-this.output)*this.input[i]));
+			this.weights[i]+=learningRate*(this.desired-this.output)*this.input[i];
 			if(new Float(this.weights[i]).isNaN())
 				throw new ArithmeticException("The new weight is NaN!");
 		}
@@ -76,6 +79,6 @@ public class Neuron {
 		if(this.desired==this.output)
 			return 1;
 		else
-			return -1;
+			return 0;
 	}
 }
