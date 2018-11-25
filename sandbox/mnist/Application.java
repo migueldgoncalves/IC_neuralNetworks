@@ -9,9 +9,9 @@ public class Application {
 	protected static final int TRAINING_MODE = 1;
 	protected static final int OPERATION_MODE = 2;
 
-	protected static final float INITIAL_LEARNING_RATE = 0.001f; //Must be between 0 and 1
+	protected static final float INITIAL_LEARNING_RATE = 0.01f; //Must be between 0 and 1
 	protected static final float FINAL_LEARNING_RATE = 1.0f; //Must be between 0 and 1
-	protected static final float LEARNING_RATE_INCREMENT = 0.001f; //Change here, do not set to 0
+	protected static final float LEARNING_RATE_INCREMENT = 0.01f; //Change here, do not set to 0
 
 	private static final String trainingImages = "train-images-idx3-ubyte.gz";
 	private static final String trainingLabels = "train-labels-idx1-ubyte.gz";

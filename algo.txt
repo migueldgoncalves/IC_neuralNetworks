@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<rdf :RDF
+xmlns : rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns : dc="http://purl.org/dc/elements/1.1/"
+xmlns : region="http://www.country-regions.fake/">
+<rdf : Description rdf : about="http://en.wikipedia.org/wiki/Granada">
+<dc : title>Granada </dc : title>
+<dc : coverage>Andalucia </dc : coverage>
+<dc : publisher>Wikipedia </dc : publisher>
+<region : population>236,982</region : population>
+<region : principaltown rdf : resource="http : //www.country-regions.fake/granada"/>
+</rdf : Description>
+</rdf :RDF>
