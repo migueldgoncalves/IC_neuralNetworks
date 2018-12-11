@@ -1,0 +1,8 @@
+Instrucciones para ejecutar los diferentes algoritmos:
+
+Perceptron de una clase:
+
+El programa está preparado para ejecutar diversas veces el algoritmo, incrementando entre cada ejecución la tasa de aprendizaje de la red.
+Cambiar las tasas de aprendizaje inicial y final, y su incremento entre cada ejecución, en el fichero "Application.java".
+Permitir la impresión de las etiquetas asignadas por la red descomentando el bloque correspondiente en el fichero "Perceptron.java", líneas 138 a 146.
+Ejecutar: Abrir un terminal en el directorio de este fichero y ejecutar el script con el comando "./script" (creado con el sistema operativo Ubuntu 16.04.5 LTS (Xenial Xerus)). El script hará toda la compilación y ejecución de forma automática, saliendo en el fin. Detener su ejecución prematuramente con CTRL+C, puede ser necesario hacer CTRL+C varias veces. El programa imprime las tasas de aprendizaje empleadas y la tasa de error de la red para cada tasa de aprendizaje.

@@ -81,4 +81,9 @@ public class Neuron {
 		else
 			return 0;
 	}
+
+	public int[] recognizeNumber() {
+		int[] array = {(int)this.output,this.number};
+		return array;
+	}
 }

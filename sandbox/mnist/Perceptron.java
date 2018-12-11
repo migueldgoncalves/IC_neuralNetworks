@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import java.io.IOException;
 
+import java.lang.StringBuilder;
+
 public class Perceptron {
 
 	private static final int NEURON_NUMBER = 10;
@@ -116,6 +118,7 @@ public class Perceptron {
 		int label = 0;
 		int successReadings = 0;
 		int insuccessReadings = 0;
+		StringBuilder atributedLabels = new StringBuilder(""); // To print labels atributed to digits
 
 		//System.out.println("Feeding data to neurons...");
 		for(int i=0; i<dataSize; i++) {
@@ -130,9 +133,23 @@ public class Perceptron {
 				successReadings++;
 			else
 				insuccessReadings++;
+
+			// To print labels atributed to digits - Can be commented
+			/*for(int j=0; j<NEURON_NUMBER; j++) {
+				if (this.neurons.get(j).recognizeNumber()[0]==1) {
+					atributedLabels.append(this.neurons.get(j).recognizeNumber()[1]);
+					break;
+				}
+				if (j==NEURON_NUMBER-1) {
+					atributedLabels.append(0); //Omission - Network did not recognize any number
+				}				
+			}*/
+			
 			/*if(i%1000==0)
 				System.out.println(i+" out of "+this.data.size()+" processed");*/
 		}
+		System.out.println("The atributed labels were:");
+		System.out.println(atributedLabels);
 		//System.out.println("There were "+successReadings+" successfully read");
 		//System.out.println("There were "+insuccessReadings+" unsuccessfully read");
 
