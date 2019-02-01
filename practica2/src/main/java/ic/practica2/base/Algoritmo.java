@@ -8,7 +8,13 @@ public class Algoritmo {
 	public static final int GENERATION_NUMBER = 100;
 	public static final double CROSSOVER_PROBABILITY = 0.5;
 	public static final double MUTATION_PROBABILITY = 0.025;
-	private static final int TOURNAMENT_SIZE = 5;
+	public static final int TOURNAMENT_SIZE = 5;
+	
+	public static final int SALTO_BALDWINIANO = 100;
+	public static final int SALTO_LAMARCKIANO = 40;
+	
+	public static final boolean greedyBaldwiniano = false;
+	public static final boolean greedyLamarckiano = true;
     
     private Populacion populacion = new Populacion(POPULATION_SIZE);
 
@@ -21,11 +27,18 @@ public class Algoritmo {
         int generation = 1;
         while (generation <= GENERATION_NUMBER) {
         	
-        	populacion.allCosts(); //Actualizar los costes
+        	populacion.resetCostsBaldwinianos();
+        	populacion.allCosts(); //Actualizar los costes base
             System.out.println("Generacion actual: " + generation);
             System.out.println("Coste minimo encontrado: " + populacion.minCost());
-            if(generation==GENERATION_NUMBER)
-            	System.out.println(populacion.bestIndividual().genes.toString());
+            if(generation==GENERATION_NUMBER) {
+            	String best = "";
+            	for(int i=0; i<populacion.bestIndividual().genes.size(); i++) {
+            		System.out.print(populacion.bestIndividual().genes.get(i));
+            		System.out.print(" ");
+            	}
+            	System.out.println(best);
+            }
             populacion = evolvePopulacion(populacion);
             generation++;
         }
@@ -49,6 +62,17 @@ public class Algoritmo {
         for (int i=1; i<POPULATION_SIZE; i++) {
             mutate(newPopulation.individuals.get(i));
         }
+        
+        if(greedyBaldwiniano)
+        	for(int i=1; i<POPULATION_SIZE; i++) {
+        		int bestCost = greedyBaldwiniano(newPopulation.individuals.get(i));
+        		newPopulation.costsBaldwinianos.set(i, bestCost);
+        	}
+        
+        if(greedyLamarckiano)
+        	for(int i=1; i<POPULATION_SIZE; i++) {
+        		greedyLamarckiano(newPopulation.individuals.get(i));
+        	}
         return newPopulation;
     }
     
@@ -58,6 +82,7 @@ public class Algoritmo {
             int random = (int) (Math.random() * POPULATION_SIZE-1);
             torneo.individuals.set(i, populacion.individuals.get(random));
         }
+        torneo.allCosts();
         return torneo.bestIndividual();
     }
 
@@ -82,6 +107,41 @@ public class Algoritmo {
     		int gene2 = individuo.genes.get(gene2Posicion);
     		individuo.genes.set(gene1Posicion, gene2);
     		individuo.genes.set(gene2Posicion, gene1);
+    	}
+    }
+    
+    public int greedyBaldwiniano(Individuo individuo) {
+    	int cost = individuo.cost;
+    	Individuo localBest = individuo;
+    	for(int i=0; i<localBest.genes.size(); i+=SALTO_BALDWINIANO) {
+    		for(int j=0; j<localBest.genes.size(); j+=SALTO_BALDWINIANO) {
+        		int gene1 = localBest.genes.get(i);
+        		int gene2 = localBest.genes.get(j);
+        		localBest.genes.set(i, gene2);
+        		localBest.genes.set(j, gene1);
+        		int newCost = Populacion.costIndividuo(localBest);
+        		if(newCost<cost) {
+        			cost = newCost;
+        		}
+        		localBest = individuo;
+    		}
+    	}
+    	return cost;
+    }
+    
+    public void greedyLamarckiano(Individuo individuo) {
+    	Individuo localBest = individuo;
+    	for(int i=0; i<localBest.genes.size(); i+=SALTO_LAMARCKIANO) {
+    		for(int j=0; j<localBest.genes.size(); j+=SALTO_LAMARCKIANO) {
+        		int gene1 = localBest.genes.get(i);
+        		int gene2 = localBest.genes.get(j);
+        		localBest.genes.set(i, gene2);
+        		localBest.genes.set(j, gene1);
+        		if(Populacion.costIndividuo(localBest)<individuo.cost) {
+        			individuo = localBest;
+        		}
+        		localBest = individuo;
+    		}
     	}
     }
     
