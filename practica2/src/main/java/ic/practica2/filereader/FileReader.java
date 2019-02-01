@@ -9,9 +9,7 @@ import java.util.logging.Logger;
 
 public class FileReader {
 	
-	static final Logger log = Logger.getLogger("log");
-	
-	public static String path = "C:\\Users\\migue\\Desktop\\IC_neuralNetworks\\practica2\\src\\main\\resources\\qap.datos\\bur26a.dat";
+	public static final Logger log = Logger.getLogger("log");
 	
 	public static int readSize(String path) {
 	
@@ -19,21 +17,23 @@ public class FileReader {
 		
 			File file = new File(path);
 			Scanner sc = new Scanner(file);
-			sc.useDelimiter(" |\n"); //Delimiter is either " " or "\n"
+			//sc.useDelimiter(" |\n"); //Delimiter is either " " or "\n"
 			
-			while (sc.hasNext()) {
+			while (sc.hasNextInt()) {
 				String size = sc.next().trim();
-				if (!size.equals("") && !size.equals("\n"))
+				if (!size.equals("") && !size.equals("\n")) {
 					sc.close();
 					return Integer.valueOf(size);
+				}
 			}
 			
 			sc.close();
-			return 0;
+			return -1;
 		} catch (Exception e) {
 			FileReader.log.info("Error while getting value");
-			FileReader.log.info(e.getStackTrace().toString());
-			return -1;
+			FileReader.log.info(e.getMessage());
+			e.printStackTrace();
+			return 0;
 		}
 	}
 	
@@ -72,7 +72,7 @@ public class FileReader {
 			
 		} catch (FileNotFoundException e) {
 			FileReader.log.info("Error while getting values");
-			FileReader.log.info(e.getStackTrace().toString());
+			FileReader.log.info(e.getMessage());
 			return null;
 		}
 	}
@@ -124,8 +124,17 @@ public class FileReader {
 			
 		} catch (FileNotFoundException e) {
 			FileReader.log.info("Error while getting values");
-			FileReader.log.info(e.getStackTrace().toString());
+			FileReader.log.info(e.getMessage());
 			return null;
 		}
+	}
+	
+	public static int[][] oneDToTwoD(int[] vector) {
+		int length = (int) Math.sqrt(vector.length);
+		int[][] matrix = new int[length][length];
+		for(int i=0; i<length; i++)
+			for(int j=0; j<length; j++)
+				matrix[i][j] = vector[length*i+j];
+		return matrix;
 	}
 }

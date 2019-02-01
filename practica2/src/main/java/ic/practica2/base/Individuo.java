@@ -1,43 +1,17 @@
 package ic.practica2.base;
 
-public class Individuo {
+import java.util.Collections;
+import java.util.ArrayList;
 
-	protected int defaultGeneLength = 64;
-	private byte[] genes = new byte[defaultGeneLength];
-	private int fitness = 0;
+public class Individuo {
+	
+	public ArrayList<Integer> genes = new ArrayList<Integer>();
+	public int cost = 0;
 
 	public Individuo() {
-		for (int i = 0; i < genes.length; i++) {
-			byte gene = (byte) Math.round(Math.random());
-			genes[i] = gene;
-			}
+		for (int i=0; i<Main.fileSize; i++) {
+			genes.add(i);
 		}
-
-	protected byte getSingleGene(int index) {
-		return genes[index];
-	}
-
-	protected void setSingleGene(int index, byte value) {
-		genes[index] = value;
-	    fitness = 0;
-	}
-
-	public int getFitness() {
-		if (fitness == 0) {
-			fitness = Algoritmo.getFitness(this);
-	    }
-		return fitness;
-	}
-
-	public String toString() {
-		String geneString = "";
-		for (int i = 0; i < genes.length; i++) {
-			geneString += getSingleGene(i);
-	    }
-	    return geneString;
-	}
-	
-	public int getDefaultGeneLength() {
-		return this.defaultGeneLength;
+		Collections.shuffle(genes);
 	}
 }

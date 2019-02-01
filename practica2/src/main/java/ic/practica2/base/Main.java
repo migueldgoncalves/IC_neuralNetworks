@@ -6,10 +6,21 @@ import ic.practica2.filereader.FileReader;
 
 public class Main {
 	
+	//Cambiar aqui el path base
+	public static String path_base = "C:\\Users\\migue\\Desktop\\IC_neuralNetworks\\practica2\\src\\main\\resources\\qap.datos\\";
+	
+	public static String document = "tai256c.dat";
+	
+	public static String path = path_base + document;
+	
+	public static int fileSize = FileReader.readSize(path);
+	public static int[][] distanceMatrix = FileReader.oneDToTwoD(FileReader.readDistanceMatrix(path));
+	public static int[][] weightMatrix = FileReader.oneDToTwoD(FileReader.readWeightMatrix(path));
+	
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException {
-		/*Algoritmo ga = new Algoritmo();
-		ga.runAlgorithm(50, "1011000100000100010000100000100111001000000100000100000000001111");*/
-		FileReader.readSize(FileReader.path);
+		
+		Algoritmo algoritmo = new Algoritmo();
+		algoritmo.execute();
 	}
 
 }
