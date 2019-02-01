@@ -65,8 +65,19 @@ public class AlgoritmoTest {
 	}
 	
 	@Test
-	public void crossoverTest() {
+	public void getSecondHalfTest() {
+		ArrayList<Integer> first = new ArrayList<Integer>();
+		ArrayList<Integer> parent = new ArrayList<Integer>();
+		first.add(1);
+		first.add(2);
+		parent.add(4);
+		parent.add(3);
+		parent.add(2);
+		parent.add(1);
 		
+		ArrayList<Integer> second = Algoritmo.getSecondHalf(first, parent);
+		Assert.assertTrue(second.get(0)==4);
+		Assert.assertTrue(second.get(1)==3);
 	}
 	
 	@After
